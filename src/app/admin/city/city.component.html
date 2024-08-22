@@ -10,7 +10,9 @@
             <tbody>
                 <tr *ngFor="let city of cityList;let sr=index">
                     <td>{{sr+1}}</td>
-                    <td>{{city.cityName}}</td>
+                    <td>
+                        <input type="text" [(ngModel)]="city.cityName" placeholder="Enter City Name "/>
+                    </td>
                 </tr>
             </tbody>
             
