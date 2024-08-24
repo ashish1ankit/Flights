@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component ,OnInit} from '@angular/core';
+import { DataFetchService } from '../../shared -services/data-fetch.service';
+import { City } from '../classes/city.model';
+
 
 @Component({
   selector: 'app-city',
@@ -8,23 +11,31 @@ import { Component ,OnInit} from '@angular/core';
 })
 export class CityComponent implements OnInit{
   private baseUrl = '/api/FlightBooking';
-cityList: any[]=[];
+  public cityList: City[]=[];
 
-constructor(private http: HttpClient){}
+constructor(private http: HttpClient,private dataService: DataFetchService){
+  
+}
 
 ngOnInit(): void {
-  this.getAllCity();
+  this.loadAllCities();
 }
 
-getAllCity(){
-  this.http.get(`${this.baseUrl}/GetAllCity`).subscribe((res:any) =>{
-    this.cityList=res.data;
-   
-  });
+
+loadAllCities(): void{
+this.dataService.getAllCity().subscribe((res ) => {
+this.cityList=res.data;
+});
 }
+
+// async loadAllCities(): Promise<void> {
+// this.cityList=await this.dataService.getAllCity();
+// console.log(this.cityList.length);
+// }
 
 bulkUpdateCity(){
-  this.http.post(`${this.baseUrl}/AddUpdateBulkCity`, this.cityList).subscribe((res:any) =>{
+
+  this.dataService.bulkAddUpdateCity(this.cityList).subscribe((res:any) =>{
    if(res.status === 200)
     alert("City Add/Update success");
   else

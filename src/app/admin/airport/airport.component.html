@@ -1,1 +1,39 @@
-<p>airport works!</p>
+<div class="row">
+    <div class="col-12 text-end">
+    <button class="btn btn-success" (click)="addNewFlight()">Add New</button>
+    <button class="btn btn-success" (click)="bulkUpdateFlight()">Bulk Update</button>    
+    </div>
+    </div>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr> 
+                    <th>Sr No.</th>
+                    <th>Airport Code</th>
+                    <th>Airport Name</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let flight of flightList;let sr=index">
+                    <td>{{sr+1}}</td>
+                    <td>
+                        <input type="text" [(ngModel)]="flight.airportCode" placeholder="Enter Airport Code"/>
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="flight.airportName" placeholder="Enter Airport Name"/>
+                    </td>
+                    <td>
+                        <select [(ngModel)]="flight.cityName" >
+                            <option value=""  *ngIf="!flight.cityName">Select the place</option>
+                            <option *ngFor="let city of cityList" [value]="city" [selected]="city ===flight.cityName">{{ city }}</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+</div>
