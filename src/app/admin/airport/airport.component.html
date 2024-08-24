@@ -27,8 +27,8 @@
                     </td>
                     <td>
                         <select [(ngModel)]="flight.cityName" >
-                            <option value=""  *ngIf="!flight.cityName">Select the place</option>
-                            <option *ngFor="let city of cityList" [value]="city" [selected]="city ===flight.cityName">{{ city }}</option>
+                            <!-- <option value=""  *ngIf="!flight.cityName">Select the place</option> -->
+                            <option *ngFor="let city of cityList" [value]="city.cityName" >{{ city.cityName }}</option>
                         </select>
                     </td>
                 </tr>

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { DataFetchService } from '../../shared -services/data-fetch.service';
+import { City } from '../classes/city.model';
 
 @Component({
   selector: 'app-airport',
@@ -7,24 +9,32 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './airport.component.css'
 })
 export class AirportComponent {
-  private baseUrl = '/api/FlightBooking';
   flightList: any[]=[];
-  cityList: any[]=["Ahmedabad"];
-  constructor(private http: HttpClient){}
+  
+  constructor(private http: HttpClient,private dataService: DataFetchService){}
   
   ngOnInit(): void {
-    // this.getAllFlights();
+    this.loadAllFlights();
   }
+  @Input() cityList: City[] = [];
   
-  getAllFlights(){
-    this.http.get(`${this.baseUrl}/GetAllAirport`).subscribe((res:any) =>{
-      this.flightList=res.data;
+  // getAllFlight(): void{
+  //   this.http.get(`${this.baseUrl}/GetAllAirport`).subscribe((res:any) =>{
+  //     this.flightList=res.data;
      
+  //   });
+  // }
+  loadAllFlights(): void{
+   
+    this.dataService.getAllFlight().subscribe((res ) => {
+     
+    this.flightList=res.data;
     });
-  }
-  
+    }
+
+
   bulkUpdateFlight(){
-    this.http.post(`${this.baseUrl}/AddUpdateBulkAirports`, this.flightList).subscribe((res:any) =>{
+      this.dataService.bulkAddUpdateFlight(this.flightList).subscribe((res:any) =>{
      if(res.status === 200)
       alert("Flight Add/Update success");
     else
@@ -32,12 +42,15 @@ export class AirportComponent {
      
     });
   }
+
+
   addNewFlight(){
   const obj= {
     "airportId": 0,
     "airportCode": "",
     "airportName": "",
-    "cityId": 0
+    "cityId": 0,
+    "cityName": ""
   };
   this.flightList.unshift(obj);
   }

@@ -10,7 +10,6 @@ import { City } from '../classes/city.model';
   styleUrl: './city.component.css'
 })
 export class CityComponent implements OnInit{
-  private baseUrl = '/api/FlightBooking';
   public cityList: City[]=[];
 
 constructor(private http: HttpClient,private dataService: DataFetchService){
@@ -43,6 +42,7 @@ bulkUpdateCity(){
    
   });
 }
+
 addNewCity(){
 const obj={
 cityId:0,
